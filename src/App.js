@@ -2,20 +2,26 @@ import React, { useState } from "react";
 import { Container, Row, Col } from "reactstrap";
 import "./App.css";
 
+import axios from 'axios'
+
 function App() {
   const [selectedRow, setSelectedRow] = useState(null);
   const [selectedCol, setSelectedCol] = useState(null);
 
-  const handleRowClick = (rowIndex) => {
-    setSelectedRow(rowIndex);
-    setSelectedCol(null);
+  const handleRowClick = async (rowIndex) => {
+    try {
+      const response = await axios.get(`http://localhost:8000/simulate?input=r${rowIndex}`, { rowIndex });
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleColClick = (colIndex) => {
     setSelectedRow(null);
     setSelectedCol(colIndex);
   };
-
+  
   return (
     <Container className="mt-5 d-flex flex-column justify-content-center align-items-center">
       <h1 className="text-center mb-5">Sukar</h1>
